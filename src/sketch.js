@@ -4,6 +4,10 @@ let fishY = 60;
 let turtleX = 0;
 let turtleS = 1;
 
+//Added assignments by daneil
+let s = 1;
+let rot = 0;
+
 function setup() {
   // These lines are fitting our canvas
   // where we want in the DOM
@@ -11,6 +15,7 @@ function setup() {
   // easier
   let myCanvas = createCanvas(400, 400);
   myCanvas.parent("canvas-parent");
+  skin = color(255, 194, 125);
 }
 
 function draw() {
@@ -18,6 +23,7 @@ function draw() {
   drawFish(fishX, fishY);
   drawTurtle(turtleX, 0, turtleS, "#83ff91", "#7575ff");
   updateAnimalPos();
+  drawSurprise();
 }
 
 function mouseClicked() {
@@ -184,4 +190,49 @@ function drawGround() {
   circle(340, 370, 20);
   circle(140, 380, 15);
   circle(60, 375, 22);
+}
+
+//Added code from lab 3 by daniel
+function drawSurprise() {
+  rot = rot + 0.05;
+  push();
+  translate(385, 375);
+  scale(0.1);
+  noStroke();
+  // Body Structure and Design
+  push();
+  fill(skin);
+  // Body Neck
+  quad(-70, 50, 70, 50, 70, 150, -70, 150);
+  // Body Head
+  ellipse(0, 0, 200, 250);
+  pop();
+  push();
+  fill(0);
+  // Suit Jacket
+  quad(-70, 150, -70, 250, -180, 250, -180, 200);
+  quad(70, 150, 70, 250, 180, 250, 180, 200);
+  // Shirt Collar
+  quad(-70, 150, 70, 150, 70, 250, -70, 250);
+  pop();
+  triangle(-72, 150, 72, 150, 0, 200);
+
+  push();
+  rotate(rot);
+
+  // Actual Change To Face
+  let r = 90;
+  let angle = (3 * PI) / 2;
+  for (let i = 0; i < 490; i++) {
+    strokeWeight(20);
+    stroke(0);
+    let x = r * cos(angle);
+    let y = r * sin(angle);
+    point(x, y);
+
+    angle += 0.04;
+    r -= 0.2;
+  }
+  pop();
+  pop();
 }
