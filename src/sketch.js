@@ -1,3 +1,9 @@
+let runAnimation = false;
+let fishX = 200;
+let fishY = 60;
+let turtleX = 0;
+let turtleS = 1;
+
 function setup() {
   // These lines are fitting our canvas
   // where we want in the DOM
@@ -9,15 +15,32 @@ function setup() {
 
 function draw() {
   drawBackground();
-  drawFish();
-  drawTurtle(0, 0, "#83ff91", "#7575ff");
+  drawFish(fishX, fishY);
+  drawTurtle(turtleX, 0, turtleS, "#83ff91", "#7575ff");
+  updateAnimalPos();
+}
+
+function mouseClicked() {
+  if (mouseX < 260 && mouseX > 90 && mouseY < 156 && mouseY > 63)
+    runAnimation = true;
+}
+
+function updateAnimalPos() {
+  if (runAnimation) {
+    fishX += 4;
+    fishY += 1.5;
+  }
+  if (fishX > 500) {
+    turtleX += 8;
+    turtleS += 0.05;
+  }
 }
 
 function drawFish() {
   push();
   noStroke();
   rotate(PI / 10);
-  translate(200, 50);
+  translate(fishX, fishY);
   fill(255, 124, 43);
 
   //body/tail
@@ -59,11 +82,13 @@ function drawFish() {
   pop();
 }
 
-function drawTurtle(x, y, shellColor, eyeColor) {
+function drawTurtle(x, y, s, shellColor, eyeColor) {
   push();
-  translate(x, y);
+  scale(s);
+  translate(x / s, y / s);
   noStroke();
-  translate(100, 380);
+
+  translate(100 / s, 380 / s);
 
   //feet
   fill("#754C2E");
