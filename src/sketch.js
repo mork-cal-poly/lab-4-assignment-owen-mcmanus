@@ -22,7 +22,7 @@ function draw() {
   drawBackground();
   drawFish(fishX, fishY);
   drawTurtle(turtleX, 0, turtleS, "#83ff91", "#7575ff");
-  updateAnimalPos();
+  updateAnimalPos(); // runs animations
   drawSurprise();
 }
 
@@ -33,10 +33,12 @@ function mouseClicked() {
 
 function updateAnimalPos() {
   if (runAnimation) {
+    // run fish animation
     fishX += 4;
     fishY += 1.5;
   }
   if (fishX > 500) {
+    // run turtle animation when fish is off the screen
     turtleX += 8;
     turtleS += 0.05;
   }
